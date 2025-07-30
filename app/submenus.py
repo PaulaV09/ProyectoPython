@@ -3,7 +3,7 @@ import utils.screenControllers as sc
 import utils.validateData as vd
 import config as cfg
 import app.submenus as sm
-
+import controllers.anadirElemento as ae 
 
 
 
@@ -26,11 +26,11 @@ def anadir_menu():
         
         match op:
             case 0:
-                pass
+                ae.anadirElementoLibro()
             case 1:
-                pass
+                ae.anadirElementoPelicula()
             case 2:
-                pass
+                ae.anadirElementoMusica()
             case 3:
                 print("Saliendo del programa...")
                 input("Presione Enter para continuar...")

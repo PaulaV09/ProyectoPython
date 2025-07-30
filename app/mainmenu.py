@@ -4,7 +4,7 @@ import utils.validateData as vd
 import config as cfg
 import app.submenus as sm
 
-opcionesMenu = ['Añadir elemento a la colección', 'Listar elementos de la colección', 'Buscar elemento en la colección', 'Editar elemento en la colección', 'Eliminar elemento de la colección', 'Salir']
+opcionesMenu = ['Añadir un nuevo elemento', 'Ver todos los elementos', 'Buscar elemento en la colección', 'Editar elemento en la colección', 'Eliminar elemento de la colección', 'Ver elementos por catagoría', 'Guardar y cargar colección', 'Salir']
 
 def main_menu():
     while True: 
@@ -24,16 +24,20 @@ def main_menu():
         
         match op:
             case 0:
-                sm.subMenuGestionLiga()
+                pass
             case 1:
-                sm.subMenuGestionEquipo()
+                pass
             case 2:
-                sm.subMenuGestionJugador()
+                pass
             case 3:
-                sm.subMenuGestionCuerpoTecMed()
+                pass
             case 4:
-                sm.subMenuGestionTorneo()
+                pass
             case 5:
+                pass
+            case 6:
+                pass
+            case 7:
                 print("Saliendo del programa...")
                 input("Presione Enter para continuar...")
                 return 
