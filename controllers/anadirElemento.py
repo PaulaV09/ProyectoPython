@@ -6,7 +6,7 @@ import config as cfg
 
 def anadirElementoLibro():
     sc.limpiar_pantalla()
-    libros_data = cf.readJson(cfg.DB_MUSICA)
+    libros_data = cf.readJson(cfg.DB_LIBROS)
     if not isinstance(libros_data, dict) or 'libros' not in libros_data:
         libros_data = {"libros": {}}
 
@@ -43,14 +43,14 @@ def anadirElementoLibro():
     }
     
     libros_data["libros"][id_libro] = nuevo_libro
-    cf.writeJson(cfg.DB_MUSICA, libros_data)
+    cf.writeJson(cfg.DB_LIBROS, libros_data)
 
     print(f"\nLibro '{titulo}' registrado con éxito con el ID: {id_libro}")
     sc.pausar_pantalla()
 
 def anadirElementoPelicula():
     sc.limpiar_pantalla()
-    peliculas_data = cf.readJson(cfg.DB_MUSICA)
+    peliculas_data = cf.readJson(cfg.DB_PELICULAS)
     if not isinstance(peliculas_data, dict) or 'peliculas' not in peliculas_data:
         peliculas_data = {"peliculas": {}}
 
@@ -87,7 +87,7 @@ def anadirElementoPelicula():
     }
     
     peliculas_data["peliculas"][id_pelicula] = nueva_pelicula
-    cf.writeJson(cfg.DB_MUSICA, peliculas_data)
+    cf.writeJson(cfg.DB_PELICULAS, peliculas_data)
 
     print(f"\Película '{titulo}' registrada con éxito con el ID: {id_pelicula}")
     sc.pausar_pantalla()

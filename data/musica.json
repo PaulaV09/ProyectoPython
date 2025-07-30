@@ -1,0 +1,11 @@
+{
+    "libros": {
+        "1": {
+            "id": "1",
+            "titulo": "A",
+            "autor": "a",
+            "genero": "a",
+            "valoracion": 1
+        }
+    }
+}
