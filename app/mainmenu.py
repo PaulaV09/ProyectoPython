@@ -24,19 +24,19 @@ def main_menu():
         
         match op:
             case 0:
-                pass
+                sm.anadir_menu()
             case 1:
-                pass
+                sm.ver_menu()
             case 2:
-                pass
+                sm.buscar_menu()
             case 3:
-                pass
+                sm.editar_menu()
             case 4:
-                pass
+                sm.eliminar_menu()
             case 5:
-                pass
+                sm.filtrar_menu()
             case 6:
-                pass
+                sm.guardar_menu()
             case 7:
                 print("Saliendo del programa...")
                 input("Presione Enter para continuar...")
