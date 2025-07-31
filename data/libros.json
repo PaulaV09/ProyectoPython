@@ -6,6 +6,13 @@
             "autor": "a",
             "genero": "a",
             "valoracion": 1
+        },
+        "2": {
+            "id": "2",
+            "titulo": "C",
+            "autor": "c",
+            "genero": "Fantas\u00eda",
+            "valoracion": 3.9
         }
     }
 }

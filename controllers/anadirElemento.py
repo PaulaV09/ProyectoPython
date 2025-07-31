@@ -1,9 +1,73 @@
-import os
 import utils.corefiles as cf
 import utils.screenControllers as sc
 import utils.validateData as vd
 import config as cfg
-
+generos_libros = [
+  "Ficción",
+  "No ficción",
+  "Novela histórica",
+  "Ciencia ficción",
+  "Fantasía",
+  "Romance",
+  "Terror",
+  "Misterio",
+  "Suspenso",
+  "Biografía",
+  "Autobiografía",
+  "Poesía",
+  "Drama",
+  "Aventura",
+  "Literatura juvenil",
+  "Autoayuda",
+  "Ensayo",
+  "Crónica",
+  "Cuento",
+  "Religión y espiritualidad"
+]
+generos_musica = [
+  "Pop",
+  "Rock",
+  "Reguetón",
+  "Rap",
+  "Hip Hop",
+  "Electrónica",
+  "Techno",
+  "House",
+  "Clásica",
+  "Jazz",
+  "Blues",
+  "R&B",
+  "Salsa",
+  "Bachata",
+  "Merengue",
+  "Cumbia",
+  "Folk",
+  "Country",
+  "Metal",
+  "Trap"
+]
+generos_peliculas = [
+  "Acción",
+  "Comedia",
+  "Drama",
+  "Terror",
+  "Ciencia ficción",
+  "Fantasía",
+  "Suspenso",
+  "Romance",
+  "Aventura",
+  "Animación",
+  "Documental",
+  "Musical",
+  "Crimen",
+  "Misterio",
+  "Histórica",
+  "Bélica",
+  "Western",
+  "Cine negro",
+  "Familiar",
+  "Biográfica"
+]
 def anadirElementoLibro():
     sc.limpiar_pantalla()
     libros_data = cf.readJson(cfg.DB_LIBROS)
@@ -11,7 +75,7 @@ def anadirElementoLibro():
         libros_data = {"libros": {}}
 
     print("-> Añadir un nuevo libro")
-    titulo = vd.validate_string("Ingrese el título del libro: ").title()
+    titulo = vd.validate_string("Ingrese el título del libro: ").title().strip()
     for libro in libros_data.get("libros", {}).values():
         if libro.get("titulo", "").lower() == titulo.lower():
             print(f"Error: El libro con el título '{titulo}' ya está registrado.")
@@ -22,8 +86,20 @@ def anadirElementoLibro():
         sc.pausar_pantalla()
         return
     autor = vd.validatetext("Ingrese el autor del libro: ")
-    genero = vd.validatetext("Ingrese el género del libro: ")
-    valoracion = vd.validateInt("Ingrese la valoración del libro (1-5): ")
+    print("-> Lista de géneros disponibles: ")
+    for i, genero in enumerate(generos_libros, start= 1):
+        print(f"{i}. {genero}")
+    genero_opcion = vd.validateInt(f"Seleccione el género del libro (1-{len(generos_libros)}): ")
+    if genero_opcion < 1 or genero_opcion > len(generos_libros):
+        print("ERROR: Opción no válida.")
+        sc.pausar_pantalla()
+        return
+    genero = generos_libros[genero_opcion - 1]
+    if not genero:
+        print("ERROR: El género no puede estar vacío.")
+        sc.pausar_pantalla()
+        return
+    valoracion = vd.validatefloat("Ingrese la valoración del libro (1-5): ")
     if valoracion < 1 or valoracion > 5:
         print("ERROR: La valoración debe estar entre 1 y 5.")
         sc.pausar_pantalla()
@@ -55,7 +131,7 @@ def anadirElementoPelicula():
         peliculas_data = {"peliculas": {}}
 
     print("-> Añadir una nueva película")
-    titulo = vd.validate_string("Ingrese el título de la película: ").title()
+    titulo = vd.validate_string("Ingrese el título de la película: ").title().strip()
     for pelicula in peliculas_data.get("peliculas", {}).values():
         if pelicula.get("titulo", "").lower() == titulo.lower():
             print(f"Error: La película con el título '{titulo}' ya está registrada.")
@@ -66,8 +142,20 @@ def anadirElementoPelicula():
         sc.pausar_pantalla()
         return
     director = vd.validatetext("Ingrese el director de la película: ")
-    genero = vd.validatetext("Ingrese el género de la película: ")
-    valoracion = vd.validateInt("Ingrese la valoración de la película (1-5): ")
+    print("-> Lista de géneros disponibles: ")
+    for i, genero in enumerate(generos_peliculas, start= 1):
+        print(f"{i}. {genero}")
+    genero_opcion = vd.validateInt(f"Seleccione el género de la película (1-{len(generos_peliculas)}): ")
+    if genero_opcion < 1 or genero_opcion > len(generos_peliculas):
+        print("ERROR: Opción no válida.")
+        sc.pausar_pantalla()
+        return
+    genero = generos_peliculas[genero_opcion - 1]
+    if not genero:
+        print("ERROR: El género no puede estar vacío.")
+        sc.pausar_pantalla()
+        return
+    valoracion = vd.validatefloat("Ingrese la valoración de la película (1-5): ")
     if valoracion < 1 or valoracion > 5:
         print("ERROR: La valoración debe estar entre 1 y 5.")
         sc.pausar_pantalla()
@@ -99,7 +187,7 @@ def anadirElementoMusica():
         musica_data = {"canciones": {}}
 
     print("-> Añadir una nueva canción")
-    titulo = vd.validate_string("Ingrese el título de la canción: ").title()
+    titulo = vd.validate_string("Ingrese el título de la canción: ").title().strip()
     for cancion in musica_data.get("canciones", {}).values():
         if cancion.get("titulo", "").lower() == titulo.lower():
             print(f"Error: La canción con el título '{titulo}' ya está registrada.")
@@ -110,8 +198,20 @@ def anadirElementoMusica():
         sc.pausar_pantalla()
         return
     artista = vd.validatetext("Ingrese el artísta de la canción: ")
-    genero = vd.validatetext("Ingrese el género de la canción: ")
-    valoracion = vd.validateInt("Ingrese la valoración de la canción (1-5): ")
+    print("-> Lista de géneros disponibles: ")
+    for i, genero in enumerate(generos_musica, start= 1):
+        print(f"{i}. {genero}")
+    genero_opcion = vd.validateInt(f"Seleccione el género de la canción (1-{len(generos_musica)}): ")
+    if genero_opcion < 1 or genero_opcion > len(generos_libros):
+        print("ERROR: Opción no válida.")
+        sc.pausar_pantalla()
+        return
+    genero = generos_libros[genero_opcion - 1]
+    if not genero:
+        print("ERROR: El género no puede estar vacío.")
+        sc.pausar_pantalla()
+        return
+    valoracion = vd.validatefloat("Ingrese la valoración de la canción (1-5): ")
     if valoracion < 1 or valoracion > 5:
         print("ERROR: La valoración debe estar entre 1 y 5.")
         sc.pausar_pantalla()
