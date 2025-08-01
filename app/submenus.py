@@ -194,33 +194,4 @@ def filtrar_menu():
                 print("Opción no implementada aún.")
                 input("Presione Enter para continuar...")
         
-def guardar_menu():
-    opcionesMenu = ["Guardar la Colección Actual","Cargar una Colección Guardada","Regresar al menú principal"]
-    while True: 
-        sc.limpiar_pantalla()
-        print("==============================================")
-        print("        Guardar y Cargar Colección           ")
-        print("==============================================")
-        print("Qué deseas hacer?")
-        for i, opcion in enumerate(opcionesMenu, start=1):
-            print(f"{i}. {opcion}")
-        op = vd.validateInt("Selecciona una opción (1-3): ") - 1
-        
-        if op < 0 or op >= len(opcionesMenu): 
-            print("Opción no válida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
-            continue 
-        
-        match op:
-            case 0:
-                pass
-            case 1:
-                pass
-            case 2:
-                print("Saliendo del programa...")
-                input("Presione Enter para continuar...")
-                return 
-            case _:
-                print("Opción no implementada aún.")
-                input("Presione Enter para continuar...")
         
