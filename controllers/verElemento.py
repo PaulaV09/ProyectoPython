@@ -40,7 +40,7 @@ def listarMusica():
         tabla.append([
             cod,
             cancion.get("titulo", "N/A"),
-            cancion.get("Artista", "N/A"),
+            cancion.get("artista", "N/A"),
             cancion.get("genero", "N/A"),
             cancion.get("valoracion", "N/A")
         ])
