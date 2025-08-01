@@ -2,6 +2,7 @@ import utils.corefiles as cf
 import utils.screenControllers as sc
 import utils.validateData as vd
 import config as cfg
+import controllers.buscarElemento as be
 
 
 def editarLibros():
@@ -29,7 +30,25 @@ def editarLibros():
 
     titulo = input("Nuevo titulo (enter para mantener): ")
     autor = input("Nuevo autor (enter para mantener): ")
-    genero = input("Nuevo genero (enter para mantener): ")
+
+    print("\n--- Generos disponibles ---")
+    
+    for idx, genero in enumerate(be.generos_libros,start=1):
+        print(f"{idx}. {genero}")
+
+    genero_codigo = input("Nuevo código del genero (enter para mantener): ")
+    
+    genero = libro["genero"] 
+    if genero_codigo.strip() != "":
+        if genero_codigo.isdigit():
+            genero_idx = int(genero_codigo)
+            if 1 <= genero_idx <= len(be.generos_libros):
+                genero = be.generos_libros[genero_idx - 1]
+            else:
+                print("Índice fuera de rango. Se mantiene el género actual.")
+        else:
+            print("Código inválido. Se mantiene el género actual.")
+
     valoracion = input("Nueva valoración (enter para mantener): ")
 
     
@@ -68,12 +87,32 @@ def editarMusica():
         print(f"{k.capitalize()}: {v}")
 
     titulo = input("Nuevo título (enter para mantener): ")
-    autor = input("Nuevo autor (enter para mantener): ")
-    genero = input("Nuevo género (enter para mantener): ")
+    artista = input("Nuevo artista (enter para mantener): ")
+
+
+    print("\n--- Generos disponibles ---")
+    
+    for idx, genero in enumerate(be.generos_musica,start=1):
+        print(f"{idx}. {genero}")
+
+    genero_codigo = input("Nuevo código del genero (enter para mantener): ")
+    
+    genero = song["genero"] 
+    if genero_codigo.strip() != "":
+        if genero_codigo.isdigit():
+            genero_idx = int(genero_codigo)
+            if 1 <= genero_idx <= len(be.generos_musica):
+                genero = be.generos_musica[genero_idx - 1]
+            else:
+                print("Índice fuera de rango. Se mantiene el género actual.")
+        else:
+            print("Código inválido. Se mantiene el género actual.")
+
+    
     valoracion = input("Nueva valoración (enter para mantener): ")
 
     song["titulo"] = titulo or song["titulo"]
-    song["autor"] = autor or song["autor"]
+    song["artista"] = artista or song["artista"]
     song["genero"] = genero or song["genero"]
     song["valoracion"] = float(valoracion) if valoracion else song["valoracion"]
 
@@ -108,7 +147,25 @@ def editarPeliculas():
 
     titulo = input("Nuevo título (enter para mantener): ")
     director = input("Nuevo director (enter para mantener): ")
-    genero = input("Nuevo género (enter para mantener): ")
+    
+    print("\n--- Generos disponibles ---")
+    
+    for idx, genero in enumerate(be.generos_peliculas,start=1):
+        print(f"{idx}. {genero}")
+
+    genero_codigo = input("Nuevo código del genero (enter para mantener): ")
+    
+    genero = peli["genero"] 
+    if genero_codigo.strip() != "":
+        if genero_codigo.isdigit():
+            genero_idx = int(genero_codigo)
+            if 1 <= genero_idx <= len(be.generos_peliculas):
+                genero = be.generos_peliculas[genero_idx - 1]
+            else:
+                print("Índice fuera de rango. Se mantiene el género actual.")
+        else:
+            print("Código inválido. Se mantiene el género actual.")
+    
     valoracion = input("Nueva valoración (enter para mantener): ")
 
     peli["titulo"] = titulo or peli["titulo"]
