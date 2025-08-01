@@ -6,8 +6,8 @@ import app.submenus as sm
 import controllers.anadirElemento as ae 
 import controllers.verElemento as ve
 import controllers.editarElemento as ee
-
-
+import controllers.eliminarElemento as de
+import controllers.buscarElemento as be
 
 def anadir_menu():
     opcionesMenu = ["Libro","Pelicula","Musica","Regresar al menú principal"]
@@ -34,7 +34,6 @@ def anadir_menu():
             case 2:
                 ae.anadirElementoMusica()
             case 3:
-                print("Saliendo del programa...")
                 input("Presione Enter para continuar...")
                 return 
             case _:
@@ -42,13 +41,32 @@ def anadir_menu():
                 input("Presione Enter para continuar...")
         
 def ver_menu():
-    opcionesMenu = ["Ver Todos los Libros","Ver Todas las Películas","Ver Toda la Música","Regresar al menú principal"]
+    opcionesMenu = ["Ver Toda la coleccion","Regresar al menú principal"]
     while True: 
         sc.limpiar_pantalla()
         print("==============================================")
         print("         Ver Todos los Elementos            ")
         print("==============================================")
-        ve.listarColeccion()
+
+        for i, opcion in enumerate(opcionesMenu, start=1):
+            print(f"{i}. {opcion}")
+        op = vd.validateInt("Selecciona una opción (1-2): ") - 1
+        
+        if op < 0 or op >= len(opcionesMenu): 
+            print("Opción no válida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+            continue 
+        
+        match op:
+            case 0:
+                ve.listarColeccion()
+                sc.limpiar_pantalla()
+            case 1:
+                input("Presione Enter para continuar...")
+                return 
+            case _:
+                print("Opción no implementada aún.")
+                input("Presione Enter para continuar...")
         
         
 def buscar_menu():
@@ -70,13 +88,12 @@ def buscar_menu():
         
         match op:
             case 0:
-                pass
+                be.buscarElementoTitulo()
             case 1:
-                pass
+                be.buscarElementoAutor()
             case 2:
-                pass
+                be.buscarElementoGenero()
             case 3:
-                print("Saliendo del programa...")
                 input("Presione Enter para continuar...")
                 return 
             case _:
@@ -111,7 +128,6 @@ def editar_menu():
                 ee.editarPeliculas()
                 sc.limpiar_pantalla()
             case 3:
-                print("Saliendo del programa...")
                 input("Presione Enter para continuar...")
                 return 
             case _:
@@ -137,11 +153,10 @@ def eliminar_menu():
         
         match op:
             case 0:
-                pass
+                de.eliminarPorTitulo()
             case 1:
-                pass
+                de.eliminarPorID()
             case 2:
-                print("Saliendo del programa...")
                 input("Presione Enter para continuar...")
                 return 
             case _:
@@ -167,13 +182,12 @@ def filtrar_menu():
         
         match op:
             case 0:
-                pass
+                ve.listarLibros()
             case 1:
-                pass
+                ve.listarPeliculas()
             case 2:
-                pass
+                ve.listarMusica()
             case 3:
-                print("Saliendo del programa...")
                 input("Presione Enter para continuar...")
                 return 
             case _:
