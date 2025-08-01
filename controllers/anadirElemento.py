@@ -177,7 +177,7 @@ def anadirElementoPelicula():
     peliculas_data["peliculas"][id_pelicula] = nueva_pelicula
     cf.writeJson(cfg.DB_PELICULAS, peliculas_data)
 
-    print(f"\Película '{titulo}' registrada con éxito con el ID: {id_pelicula}")
+    print(f"Película '{titulo}' registrada con éxito con el ID: {id_pelicula}")
     sc.pausar_pantalla()
 
 def anadirElementoMusica():
@@ -202,11 +202,11 @@ def anadirElementoMusica():
     for i, genero in enumerate(generos_musica, start= 1):
         print(f"{i}. {genero}")
     genero_opcion = vd.validateInt(f"Seleccione el género de la canción (1-{len(generos_musica)}): ")
-    if genero_opcion < 1 or genero_opcion > len(generos_libros):
+    if genero_opcion < 1 or genero_opcion > len(generos_musica):
         print("ERROR: Opción no válida.")
         sc.pausar_pantalla()
         return
-    genero = generos_libros[genero_opcion - 1]
+    genero = generos_musica[genero_opcion - 1]
     if not genero:
         print("ERROR: El género no puede estar vacío.")
         sc.pausar_pantalla()
@@ -233,5 +233,5 @@ def anadirElementoMusica():
     musica_data["canciones"][id_cancion] = nueva_cancion
     cf.writeJson(cfg.DB_MUSICA, musica_data)
 
-    print(f"\Canción '{titulo}' registrada con éxito con el ID: {id_cancion}")
+    print(f"Canción '{titulo}' registrada con éxito con el ID: {id_cancion}")
     sc.pausar_pantalla()

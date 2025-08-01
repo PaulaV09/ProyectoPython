@@ -1,7 +1,10 @@
+import os
+from tabulate import tabulate 
 import utils.corefiles as cf
 import utils.screenControllers as sc
 import utils.validateData as vd
 import config as cfg
+
 generos_libros = [
   "Ficción",
   "No ficción",
@@ -68,45 +71,66 @@ generos_peliculas = [
   "Familiar",
   "Biográfica"
 ]
+
 def buscarElementoTitulo():
     sc.limpiar_pantalla()
     libros_data = cf.readJson(cfg.DB_LIBROS)
     peliculas_data = cf.readJson(cfg.DB_PELICULAS)
     musica_data = cf.readJson(cfg.DB_MUSICA)
 
-    if not libros_data and not peliculas_data and not musica_data:
+    if not (libros_data) and not (peliculas_data) and not (musica_data):
         print("No hay elementos en la colección.")
         sc.pausar_pantalla()
         return
-    
+
     titulo_buscar = vd.validate_string("Ingrese el título del elemento a buscar: ").title().strip()
-    if not titulo_buscar:
+    if not (titulo_buscar):
         print("ERROR: El título no puede estar vacío.")
         sc.pausar_pantalla()
         return
     
+    encontrado = None 
+    tipo_elemento = ""
+
     for libro in libros_data.get("libros", {}).values():
-        if libro.get("titulo", "").lower() == titulo_buscar.lower():
-            msg = f"Libro encontrado: {libro['titulo']} (ID: {libro['id']})\nAutor: {libro['autor']}\n Género: {libro['genero']}\n Valoración: {libro['valoracion']} estrellas"
-            sc.pausar_pantalla()
-            return
-        
-    for pelicula in peliculas_data.get("peliculas", {}).values():
-        if pelicula.get("titulo", "").lower() == titulo_buscar.lower():
-            msg = f"Pelicula encontrada: {pelicula['titulo']} (ID: {pelicula['id']})\nDirector: {pelicula['director']}\n Género: {pelicula['genero']}\n Valoración: {pelicula['valoracion']} estrellas"
-            sc.pausar_pantalla()
-            return
-    
-    for cancion in musica_data.get("canciones", {}).values():
-        if cancion.get("titulo", "").lower() == titulo_buscar.lower():
-            msg = f"Canción encontrada: {cancion['titulo']} (ID: {cancion['id']})\nArtísta: {cancion['artista']}\n Género: {cancion['genero']}\n Valoración: {cancion['valoracion']} estrellas"
-            sc.pausar_pantalla()
-            return
-    
-    if msg:
-        print(msg)
+        if (libro.get("titulo", "").lower() == titulo_buscar.lower()):
+            encontrado = libro
+            tipo_elemento = "Libro"
+            break 
+            
+    if not (encontrado):
+        for pelicula in peliculas_data.get("peliculas", {}).values():
+            if (pelicula.get("titulo", "").lower() == titulo_buscar.lower()):
+                encontrado = pelicula
+                tipo_elemento = "Película"
+                break
+
+    if not (encontrado):
+        for cancion in musica_data.get("canciones", {}).values():
+            if (cancion.get("titulo", "").lower() == titulo_buscar.lower()):
+                encontrado = cancion
+                tipo_elemento = "Canción"
+                break
+
+    if (encontrado):
+        print(f"\n{tipo_elemento} encontrado:")
+        headers = ["ID", "Título", "Autor/Director/Artista", "Género", "Valoración"]
+
+        autor_director_artista = (encontrado.get("autor") or encontrado.get("director") or encontrado.get("artista"))
+
+        datos = [
+            [
+                encontrado.get('id'), 
+                encontrado.get('titulo'), 
+                autor_director_artista, 
+                encontrado.get('genero'), 
+                f"{encontrado.get('valoracion', 0)} estrellas"
+            ]
+        ]        
+        print(tabulate(datos, headers=headers, tablefmt="fancy_grid"))
     else:
-        print(f"No se encontró ningún elemento con el título '{titulo_buscar}'.")
+        print(f"\nNo se encontró ningún elemento con el título '{titulo_buscar}'.")
+        
     sc.pausar_pantalla()
     return
 
@@ -116,43 +140,52 @@ def buscarElementoAutor():
     peliculas_data = cf.readJson(cfg.DB_PELICULAS)
     musica_data = cf.readJson(cfg.DB_MUSICA)
 
-    if not libros_data and not peliculas_data and not musica_data:
+    if not (libros_data) and not (peliculas_data) and not (musica_data):
         print("No hay elementos en la colección.")
         sc.pausar_pantalla()
         return
     
     nombre_buscar = vd.validate_string("Ingrese el nombre del autor/director/artista del elemento a buscar: ").title().strip()
-    if not nombre_buscar:
+    if not (nombre_buscar):
         print("ERROR: El título no puede estar vacío.")
         sc.pausar_pantalla()
         return
     
     encontrado = []
     for libro in libros_data.get("libros", {}).values():
-        if libro.get("autor", "").lower() == nombre_buscar.lower():
+        if (libro.get("autor", "").lower() == nombre_buscar.lower()):
+            libro["tipo"] = "Libro" 
             encontrado.append(libro)
-        
+            
     for pelicula in peliculas_data.get("peliculas", {}).values():
-        if pelicula.get("director", "").lower() == nombre_buscar.lower():
+        if (pelicula.get("director", "").lower() == nombre_buscar.lower()):
+            pelicula["tipo"] = "Película"
             encontrado.append(pelicula)
     
     for cancion in musica_data.get("canciones", {}).values():
-        if cancion.get("artista", "").lower() == nombre_buscar.lower():
+        if (cancion.get("artista", "").lower() == nombre_buscar.lower()):
+            cancion["tipo"] = "Canción"
             encontrado.append(cancion)
     
-    if encontrado:
-        for elem in encontrado:
-            if 'autor' in elem:
-                msg = f"Libro encontrado: {elem['titulo']} (ID: {elem['id']})\nAutor: {elem['autor']}\n Género: {elem['genero']}\n Valoración: {elem['valoracion']} estrellas"
-            elif 'director' in elem:
-                msg = f"Pelicula encontrada: {elem['titulo']} (ID: {elem['id']})\nDirector: {elem['director']}\n Género: {elem['genero']}\n Valoración: {elem['valoracion']} estrellas"
-            else:
-                msg = f"Canción encontrada: {elem['titulo']} (ID: {elem['id']})\nArtísta: {elem['artista']}\n Género: {elem['genero']}\n Valoración: {elem['valoracion']} estrellas"
-            print(msg)
-    else:
-        msg = f"No se encontró ningún elemento con el autor/director/artista '{nombre_buscar}'."
+    if (encontrado):
+        print(f"\nElementos encontrados para '{nombre_buscar}':")
+        headers = ["Tipo", "ID", "Título", "Género", "Valoración"]
 
-    print(msg)
+        datos_tabla = []
+        for elem in encontrado:
+            fila = [
+                elem["tipo"],
+                elem["id"],
+                elem["titulo"],
+                elem["genero"],
+                f"{elem['valoracion']} estrellas"
+            ]
+            datos_tabla.append(fila)
+        
+        print(tabulate(datos_tabla, headers=headers, tablefmt="fancy_grid"))
+    else:
+        print(f"No se encontró ningún elemento con el autor/director/artista '{nombre_buscar}'.")
+
     sc.pausar_pantalla()
     return
 
@@ -161,86 +194,98 @@ def buscarElementoGenero():
     libros_data = cf.readJson(cfg.DB_LIBROS)
     peliculas_data = cf.readJson(cfg.DB_PELICULAS)
     musica_data = cf.readJson(cfg.DB_MUSICA)
-    if not libros_data and not peliculas_data and not musica_data:
+    if not (libros_data) and not (peliculas_data) and not (musica_data):
         print("No hay elementos en la colección.")
         sc.pausar_pantalla()
         return
     
-    opGenero = vd.validateInt("Seleccione  la categoría del género a buscar:\n1. Libros\n2. Películas\n3. Música\n4. Regresar al menú principal\nOpción: ")
-    if not opGenero:
+    opGenero = vd.validateInt("Seleccione  la categoría del género a buscar:\n1. Libros\n2. Películas\n3. Música\n4. Regresar al menú principal\nOpción: ")
+    if not (opGenero):
         print("ERROR: El género no puede estar vacío.")
         sc.pausar_pantalla()
         return
-    if opGenero < 1 or opGenero > 4:
+    if (opGenero < 1) or (opGenero > 4):
         print("ERROR: Opción no válida.")
         sc.pausar_pantalla()
         return
-    if opGenero == 1:
+    
+    encontrado = []
+    genero_buscar = ""
+    tipo_busqueda = ""
+    headers = []
+
+    if (opGenero == 1):
+        sc.limpiar_pantalla()
         print("-> Lista de géneros disponibles: ")
         for i, genero in enumerate(generos_libros, start= 1):
             print(f"{i}. {genero}")
         genero_opcion = vd.validateInt(f"Seleccione el género de libro (1-{len(generos_libros)}): ")
-        if genero_opcion < 1 or genero_opcion > len(generos_libros):
+        if (genero_opcion > 0) or (genero_opcion <= len(generos_libros)):
+            genero_buscar = generos_libros[genero_opcion - 1]
+            tipo_busqueda = "Libro"
+            headers = ["ID", "Título", "Autor", "Género", "Valoración"]
+            for libro in libros_data.get("libros", {}).values():
+                if (libro.get("genero", "").lower() == genero_buscar.lower()):
+                    encontrado.append(libro)
+        else:
             print("ERROR: Opción no válida.")
             sc.pausar_pantalla()
             return
-        genero_buscar = generos_libros[genero_opcion - 1]
-        
-        encontrado = []
-        for libro in libros_data.get("libros", {}).values():
-            if libro.get("genero", "").lower() == genero_buscar.lower():
-                encontrado.append(libro)
-        
-        if encontrado:
-            for libro in encontrado:
-                msg = f"Libro encontrado: {libro['titulo']} (ID: {libro['id']})\nAutor: {libro['autor']}\n Género: {libro['genero']}\n Valoración: {libro['valoracion']} estrellas"
-                print(msg)
-        else:
-            msg = f"No se encontró ningún libro con el género '{genero_buscar}'."
-            print(msg)
-    elif opGenero == 2:
+            
+    elif (opGenero == 2):
+        sc.limpiar_pantalla()
         print("-> Lista de géneros disponibles: ")
         for i, genero in enumerate(generos_peliculas, start= 1):
             print(f"{i}. {genero}")
         genero_opcion = vd.validateInt(f"Seleccione el género de película (1-{len(generos_peliculas)}): ")
-        if genero_opcion < 1 or genero_opcion > len(generos_peliculas):
+        if (genero_opcion > 0) or (genero_opcion <= len(generos_peliculas)):
+            genero_buscar = generos_peliculas[genero_opcion - 1]
+            tipo_busqueda = "Película"
+            headers = ["ID", "Título", "Director", "Género", "Valoración"]
+            for pelicula in peliculas_data.get("peliculas", {}).values():
+                if (pelicula.get("genero", "").lower() == genero_buscar.lower()):
+                    encontrado.append(pelicula)
+        else:
             print("ERROR: Opción no válida.")
             sc.pausar_pantalla()
             return
-        genero_buscar = generos_peliculas[genero_opcion - 1]
-        
-        encontrado = []
-        for pelicula in peliculas_data.get("peliculas", {}).values():
-            if pelicula.get("genero", "").lower() == genero_buscar.lower():
-                encontrado.append(pelicula)
-        
-        if encontrado:
-            for pelicula in encontrado:
-                msg = f"Pelicula encontrada: {pelicula['titulo']} (ID: {pelicula['id']})\nDirector: {pelicula['director']}\n Género: {pelicula['genero']}\n Valoración: {pelicula['valoracion']} estrellas"
-                print(msg)
-        else:
-            msg = f"No se encontró ninguna película con el género '{genero_buscar}'."
-            print(msg)    
-    elif opGenero == 3:
+            
+    elif (opGenero == 3):
+        sc.limpiar_pantalla()
         print("-> Lista de géneros disponibles: ")
         for i, genero in enumerate(generos_musica, start= 1):
             print(f"{i}. {genero}")
         genero_opcion = vd.validateInt(f"Seleccione el género de música (1-{len(generos_musica)}): ")
-        if genero_opcion < 1 or genero_opcion > len(generos_musica):
+        if (genero_opcion > 0) or (genero_opcion <= len(generos_musica)):
+            genero_buscar = generos_musica[genero_opcion - 1]
+            tipo_busqueda = "Canción"
+            headers = ["ID", "Título", "Artista", "Género", "Valoración"]
+            for cancion in musica_data.get("canciones", {}).values(): 
+                if (cancion.get("genero", "").lower() == genero_buscar.lower()):
+                    encontrado.append(cancion)
+        else:
             print("ERROR: Opción no válida.")
             sc.pausar_pantalla()
             return
-        genero_buscar = generos_musica[genero_opcion - 1]
+    elif (opGenero == 4):
+        return
         
-        encontrado = []
-        for cancion in musica_data.get("cancion", {}).values():
-            if cancion.get("genero", "").lower() == genero_buscar.lower():
-                encontrado.append(cancion)
+    if (encontrado):
+        sc.limpiar_pantalla()
+        print(f"\nResultados encontrados para el género '{genero_buscar}':")
+        datos_tabla = []
+        for elem in encontrado:
+            fila = [
+                elem.get("id"), 
+                elem.get("titulo"), 
+                elem.get("autor") or elem.get("director") or elem.get("artista"),
+                elem.get("genero"), 
+                f"{elem.get('valoracion', 0)} estrellas"
+            ]
+            datos_tabla.append(fila)
+        print(tabulate(datos_tabla, headers=headers, tablefmt="fancy_grid"))
+    elif (opGenero in [1, 2, 3]): 
+        print(f"No se encontró ningún {tipo_busqueda.lower()} con el género '{genero_buscar}'.")
         
-        if encontrado:
-            for cancion in encontrado:
-                msg = f"Canción encontrada: {cancion['titulo']} (ID: {cancion['id']})\nDirector: {cancion['artista']}\n Género: {cancion['genero']}\n Valoración: {cancion['valoracion']} estrellas"
-                print(msg)
-        else:
-            msg = f"No se encontró ninguna canción con el género '{genero_buscar}'."
-            print(msg)    
+    sc.pausar_pantalla()
+    return
