@@ -5,115 +5,118 @@ import config as cfg
 
 
 def editarLibros():
-    libros = cf.readJson(cfg.DB_LIBROS)
+    data = cf.readJson(cfg.DB_LIBROS)
+    libros = data.get("libros", {})
 
     if not libros:
         print("No hay libros.")
         return
 
     for cod, libro in libros.items():
-        print(f"{cod}: {libro['nombre']}")
+        print(f"{cod}: {libro['titulo']}")
 
     id = input("Id del libro a editar: ")
-    id = libros.get(id)
 
-    if not libro:
+    if id not in libros:
         print("Código no válido.")
         return
     
-    print("\n--- Datos actuales ---")
     libro = libros[id]
 
+    print("\n--- Datos actuales ---")
     for k, v in libro.items():
         print(f"{k.capitalize()}: {v}")
 
-    titulo= input("Nuevo titulo (enter para mantener): " or libro["titulo"])
-    autor= input("Nuevo autor (enter para mantener): " or libro["autor"])
-    genero= input("Nuevo genero (enter para mantener): " or libro["genero"])
-    valoracion= input("Nuevo valoracion (enter para mantener): " or libro["valoracion"])
+    titulo = input("Nuevo titulo (enter para mantener): ")
+    autor = input("Nuevo autor (enter para mantener): ")
+    genero = input("Nuevo genero (enter para mantener): ")
+    valoracion = input("Nueva valoración (enter para mantener): ")
 
-    nuevo_libro = {
-        "titulo": titulo,
-        "autor": autor,
-        "genero": genero,
-        "valoracion": valoracion
-    }
-    libros[libro]= nuevo_libro
-    cf.writeJson(cfg.DB_LIBROS, libros)
+    
+    libro["titulo"] = titulo or libro["titulo"]
+    libro["autor"] = autor or libro["autor"]
+    libro["genero"] = genero or libro["genero"]
+    libro["valoracion"] = float(valoracion) if valoracion else libro["valoracion"]
+
+    libros[id] = libro
+    data["libros"] = libros
+    cf.writeJson(cfg.DB_LIBROS, data)
     print("Libro actualizado correctamente.")
 
+
 def editarMusica():
-    musica = cf.readJson(cfg.DB_MUSICA)
+    data = cf.readJson(cfg.DB_MUSICA)
+    musica = data.get("canciones", {})
 
     if not musica:
         print("No hay canciones.")
         return
 
-    for cod, music in musica.items():
-        print(f"{cod}: {music['titulo']}")
+    for cod, song in musica.items():
+        print(f"{cod}: {song['titulo']}")
 
-    id = input("Id del libro a editar: ")
-    id = musica.get(id)
+    id = input("ID de la canción a editar: ")
 
-    if not music:
-        print("Código no válido.")
+    if id not in musica:
+        print("ID no válido.")
         return
-    
-    print("\n--- Datos actuales ---")
-    music = musica[id]
 
-    for k, v in music.items():
+    song = musica[id]
+
+    print("\n--- Datos actuales ---")
+    for k, v in song.items():
         print(f"{k.capitalize()}: {v}")
 
-    titulo= input("Nuevo titulo (enter para mantener): " or music["titulo"])
-    artista= input("Nuevo artista (enter para mantener): " or music["artista"])
-    genero= input("Nuevo genero (enter para mantener): " or music["genero"])
-    valoracion= input("Nuevo valoracion (enter para mantener): " or music["valoracion"])
+    titulo = input("Nuevo título (enter para mantener): ")
+    autor = input("Nuevo autor (enter para mantener): ")
+    genero = input("Nuevo género (enter para mantener): ")
+    valoracion = input("Nueva valoración (enter para mantener): ")
 
-    nuevo_music = {
-        "titulo": titulo,
-        "artista": artista,
-        "genero": genero,
-        "valoracion": valoracion
-    }
-    musica[music]= nuevo_music
-    cf.writeJson(cfg.DB_MUSICA, musica)
-    print("Cancion actualizado correctamente.")
+    song["titulo"] = titulo or song["titulo"]
+    song["autor"] = autor or song["autor"]
+    song["genero"] = genero or song["genero"]
+    song["valoracion"] = float(valoracion) if valoracion else song["valoracion"]
+
+    musica[id] = song
+    data["canciones"] = musica
+    cf.writeJson(cfg.DB_MUSICA, data)
+    print("Canción actualizada correctamente.")
+
 
 def editarPeliculas():
-    peliculas = cf.readJson(cfg.DB_PELICULAS)
+    data = cf.readJson(cfg.DB_PELICULAS)
+    peliculas = data.get("peliculas", {})
 
     if not peliculas:
-        print("No hay peliculas.")
+        print("No hay películas.")
         return
 
-    for cod, pelicula in peliculas.items():
-        print(f"{cod}: {pelicula['nombre']}")
+    for cod, peli in peliculas.items():
+        print(f"{cod}: {peli['titulo']}")
 
-    id = input("Id del peliculas a editar: ")
-    id = pelicula.get(id)
+    id = input("ID de la película a editar: ")
 
-    if not pelicula:
-        print("Código no válido.")
+    if id not in peliculas:
+        print("ID no válido.")
         return
-    
+
+    peli = peliculas[id]
+
     print("\n--- Datos actuales ---")
-    pelicula = peliculas[id]
-
-    for k, v in pelicula.items():
+    for k, v in peli.items():
         print(f"{k.capitalize()}: {v}")
 
-    titulo= input("Nuevo titulo (enter para mantener): " or pelicula["titulo"])
-    director= input("Nuevo director (enter para mantener): " or pelicula["director"])
-    genero= input("Nuevo genero (enter para mantener): " or pelicula["genero"])
-    valoracion= input("Nuevo valoracion (enter para mantener): " or pelicula["valoracion"])
+    titulo = input("Nuevo título (enter para mantener): ")
+    director = input("Nuevo director (enter para mantener): ")
+    genero = input("Nuevo género (enter para mantener): ")
+    valoracion = input("Nueva valoración (enter para mantener): ")
 
-    nueva_pelicula = {
-        "titulo": titulo,
-        "director": director,
-        "genero": genero,
-        "valoracion": valoracion
-    }
-    peliculas[pelicula]= nueva_pelicula
-    cf.writeJson(cfg.DB_PELICULAS, peliculas)
-    print("Pelicula actualizada correctamente.")
+    peli["titulo"] = titulo or peli["titulo"]
+    peli["director"] = director or peli["director"]
+    peli["genero"] = genero or peli["genero"]
+    peli["valoracion"] = float(valoracion) if valoracion else peli["valoracion"]
+
+    peliculas[id] = peli
+    data["peliculas"] = peliculas
+    cf.writeJson(cfg.DB_PELICULAS, data)
+    print("Película actualizada correctamente.")
