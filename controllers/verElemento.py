@@ -40,12 +40,12 @@ def listarMusica():
         tabla.append([
             cod,
             cancion.get("titulo", "N/A"),
-            cancion.get("autor", "N/A"),
+            cancion.get("Artista", "N/A"),
             cancion.get("genero", "N/A"),
             cancion.get("valoracion", "N/A")
         ])
 
-    print(tabulate(tabla, headers=["ID", "Título", "Autor", "Género", "Valoración"], tablefmt="fancy_grid"))
+    print(tabulate(tabla, headers=["ID", "Título", "Artista", "Género", "Valoración"], tablefmt="fancy_grid"))
     sc.pausar_pantalla()
 
 def listarPeliculas():
