@@ -4,6 +4,8 @@ import utils.validateData as vd
 import config as cfg
 import app.submenus as sm
 import controllers.anadirElemento as ae 
+import controllers.verElemento as ve
+import controllers.editarElemento as ee
 
 
 
@@ -46,30 +48,8 @@ def ver_menu():
         print("==============================================")
         print("         Ver Todos los Elementos            ")
         print("==============================================")
-        print("¿Qué categoría deseas ver?")
-        for i, opcion in enumerate(opcionesMenu, start=1):
-            print(f"{i}. {opcion}")
-        op = vd.validateInt("Selecciona una opción (1-4): ") - 1
+        ve.listarColeccion()
         
-        if op < 0 or op >= len(opcionesMenu): 
-            print("Opción no válida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
-            continue 
-        
-        match op:
-            case 0:
-                pass
-            case 1:
-                pass
-            case 2:
-                pass
-            case 3:
-                print("Saliendo del programa...")
-                input("Presione Enter para continuar...")
-                return 
-            case _:
-                print("Opción no implementada aún.")
-                input("Presione Enter para continuar...")
         
 def buscar_menu():
     opcionesMenu = ["Buscar por Título","Buscar por Autor/Director/Artista","Buscar por Género","Regresar al menú principal"]
@@ -104,7 +84,7 @@ def buscar_menu():
                 input("Presione Enter para continuar...")
         
 def editar_menu():
-    opcionesMenu = ["Editar Título","Editar Autor/Director/Artista","Editar Género","Editar Valoración","Regresar al menú principal"]
+    opcionesMenu = ["Editar libro","Editar Cancion","Editar pelicula","Regresar al menú principal"]
     while True: 
         sc.limpiar_pantalla()
         print("==============================================")
@@ -122,14 +102,15 @@ def editar_menu():
         
         match op:
             case 0:
-                pass
+                ee.editarLibros()
+                sc.limpiar_pantalla()
             case 1:
-                pass
+                ee.editarMusica()
+                sc.limpiar_pantalla()
             case 2:
-                pass
+                ee.editarPeliculas()
+                sc.limpiar_pantalla()
             case 3:
-                pass
-            case 4:
                 print("Saliendo del programa...")
                 input("Presione Enter para continuar...")
                 return 
