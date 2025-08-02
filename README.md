@@ -1,4 +1,6 @@
 # Proyecto de Biblioteca Multimedia
+## Paula Andrea Viviescas Jaimes & Sebastian Andres Mora Valenzuela
+
 
 ## 📝 Descripción
 
