@@ -13,6 +13,7 @@ def editarLibros():
 
     if not libros:
         print("No hay libros.")
+        sc.pausar_pantalla()
         return
 
     for cod, libro in libros.items():
@@ -74,6 +75,7 @@ def editarMusica():
 
     if not musica:
         print("No hay canciones.")
+        sc.pausar_pantalla()
         return
 
     for cod, song in musica.items():
@@ -136,6 +138,7 @@ def editarPeliculas():
 
     if not peliculas:
         print("No hay películas.")
+        sc.pausar_pantalla()
         return
 
     for cod, peli in peliculas.items():

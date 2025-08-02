@@ -11,6 +11,7 @@ def listarLibros():
     print("-------Libros------")
     if not libros:
         print("No hay libros registrados.")
+        sc.pausar_pantalla()
         return
 
     tabla = []
@@ -33,6 +34,7 @@ def listarMusica():
     print("-------Música------")
     if not musica:
         print("No hay música registrada.")
+        sc.pausar_pantalla()
         return
 
     tabla = []
@@ -55,6 +57,7 @@ def listarPeliculas():
     print("-----Películas-----")
     if not peliculas:
         print("No hay películas registradas.")
+        sc.pausar_pantalla()
         return
 
     tabla = []
