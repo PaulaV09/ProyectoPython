@@ -6,6 +6,8 @@ import controllers.buscarElemento as be
 
 
 def editarLibros():
+    sc.limpiar_pantalla()
+    print("\n--- Libros disponibles ---")
     data = cf.readJson(cfg.DB_LIBROS)
     libros = data.get("libros", {})
 
@@ -23,7 +25,7 @@ def editarLibros():
         return
     
     libro = libros[id]
-
+    sc.limpiar_pantalla()
     print("\n--- Datos actuales ---")
     for k, v in libro.items():
         print(f"{k.capitalize()}: {v}")
@@ -49,7 +51,7 @@ def editarLibros():
         else:
             print("Código inválido. Se mantiene el género actual.")
 
-    valoracion = input("Nueva valoración (enter para mantener): ")
+    valoracion = vd.validateValoracion("Nueva valoración (enter para mantener): ")
 
     
     libro["titulo"] = titulo or libro["titulo"]
@@ -61,9 +63,12 @@ def editarLibros():
     data["libros"] = libros
     cf.writeJson(cfg.DB_LIBROS, data)
     print("Libro actualizado correctamente.")
+    sc.pausar_pantalla()
 
 
 def editarMusica():
+    sc.limpiar_pantalla()
+    print("\n--- Canciones disponibles ---")
     data = cf.readJson(cfg.DB_MUSICA)
     musica = data.get("canciones", {})
 
@@ -81,7 +86,7 @@ def editarMusica():
         return
 
     song = musica[id]
-
+    sc.limpiar_pantalla()
     print("\n--- Datos actuales ---")
     for k, v in song.items():
         print(f"{k.capitalize()}: {v}")
@@ -109,7 +114,7 @@ def editarMusica():
             print("Código inválido. Se mantiene el género actual.")
 
     
-    valoracion = input("Nueva valoración (enter para mantener): ")
+    valoracion = vd.validateValoracion("Nueva valoración (enter para mantener): ")
 
     song["titulo"] = titulo or song["titulo"]
     song["artista"] = artista or song["artista"]
@@ -120,9 +125,12 @@ def editarMusica():
     data["canciones"] = musica
     cf.writeJson(cfg.DB_MUSICA, data)
     print("Canción actualizada correctamente.")
+    sc.pausar_pantalla()
 
 
 def editarPeliculas():
+    sc.limpiar_pantalla()
+    print("\n--- Películas disponibles ---")
     data = cf.readJson(cfg.DB_PELICULAS)
     peliculas = data.get("peliculas", {})
 
@@ -140,7 +148,7 @@ def editarPeliculas():
         return
 
     peli = peliculas[id]
-
+    sc.limpiar_pantalla()
     print("\n--- Datos actuales ---")
     for k, v in peli.items():
         print(f"{k.capitalize()}: {v}")
@@ -166,7 +174,11 @@ def editarPeliculas():
         else:
             print("Código inválido. Se mantiene el género actual.")
     
-    valoracion = input("Nueva valoración (enter para mantener): ")
+    valoracion = vd.validateValoracion("Nueva valoración (enter para mantener): ")
+    if valoracion < 1 or valoracion > 5:
+        print("ERROR: La valoración debe estar entre 1 y 5.")
+        sc.pausar_pantalla()
+        return
 
     peli["titulo"] = titulo or peli["titulo"]
     peli["director"] = director or peli["director"]
@@ -177,3 +189,4 @@ def editarPeliculas():
     data["peliculas"] = peliculas
     cf.writeJson(cfg.DB_PELICULAS, data)
     print("Película actualizada correctamente.")
+    sc.pausar_pantalla()

@@ -7,18 +7,11 @@
             "genero": "Crimen",
             "valoracion": 5.0
         },
-        "2": {
-            "id": "2",
-            "titulo": "Titanic",
-            "director": "James Cameron",
-            "genero": "Romance",
-            "valoracion": 4.8
-        },
         "3": {
             "id": "3",
             "titulo": "Inception",
             "director": "Christopher Nolan",
-            "genero": "Ciencia ficción",
+            "genero": "Ciencia ficci\u00f3n",
             "valoracion": 4.9
         },
         "4": {
@@ -32,14 +25,14 @@
             "id": "5",
             "titulo": "Matrix",
             "director": "Lana Wachowski",
-            "genero": "Ciencia ficción",
+            "genero": "Ciencia ficci\u00f3n",
             "valoracion": 4.7
         },
         "6": {
             "id": "6",
             "titulo": "Gladiador",
             "director": "Ridley Scott",
-            "genero": "Acción",
+            "genero": "Acci\u00f3n",
             "valoracion": 4.6
         },
         "7": {
@@ -67,7 +60,7 @@
             "id": "10",
             "titulo": "Avengers: Endgame",
             "director": "Anthony Russo",
-            "genero": "Superhéroes",
+            "genero": "Superh\u00e9roes",
             "valoracion": 4.8
         }
     }

@@ -99,7 +99,7 @@ def anadirElementoLibro():
         print("ERROR: El género no puede estar vacío.")
         sc.pausar_pantalla()
         return
-    valoracion = vd.validatefloat("Ingrese la valoración del libro (1-5): ")
+    valoracion = vd.validateValoracion("Ingrese la valoración del libro (1-5): ")
     if valoracion < 1 or valoracion > 5:
         print("ERROR: La valoración debe estar entre 1 y 5.")
         sc.pausar_pantalla()
@@ -155,7 +155,7 @@ def anadirElementoPelicula():
         print("ERROR: El género no puede estar vacío.")
         sc.pausar_pantalla()
         return
-    valoracion = vd.validatefloat("Ingrese la valoración de la película (1-5): ")
+    valoracion = vd.validateValoracion("Ingrese la valoración de la película (1-5): ")
     if valoracion < 1 or valoracion > 5:
         print("ERROR: La valoración debe estar entre 1 y 5.")
         sc.pausar_pantalla()
@@ -211,7 +211,7 @@ def anadirElementoMusica():
         print("ERROR: El género no puede estar vacío.")
         sc.pausar_pantalla()
         return
-    valoracion = vd.validatefloat("Ingrese la valoración de la canción (1-5): ")
+    valoracion = vd.validateValoracion("Ingrese la valoración de la canción (1-5): ")
     if valoracion < 1 or valoracion > 5:
         print("ERROR: La valoración debe estar entre 1 y 5.")
         sc.pausar_pantalla()

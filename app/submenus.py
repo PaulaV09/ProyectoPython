@@ -110,7 +110,7 @@ def editar_menu():
         print("Qué tipo de cambio deseas realizar?")
         for i, opcion in enumerate(opcionesMenu, start=1):
             print(f"{i}. {opcion}")
-        op = vd.validateInt("Selecciona una opción (1-5): ") - 1
+        op = vd.validateInt("Selecciona una opción (1-4): ") - 1
         
         if op < 0 or op >= len(opcionesMenu): 
             print("Opción no válida. Intente de nuevo.")

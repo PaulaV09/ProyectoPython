@@ -4,15 +4,15 @@
             "id": "1",
             "titulo": "1984",
             "autor": "George Orwell",
-            "genero": "Distop\u00eda",
-            "valoracion": 4.7
+            "genero": "Ficci\u00f3n",
+            "valoracion": 4.0
         },
         "2": {
             "id": "2",
             "titulo": "Cien A\u00f1os de Soledad",
             "autor": "Gabriel Garc\u00eda M\u00e1rquez",
-            "genero": "Realismo m\u00e1gico",
-            "valoracion": 4.9
+            "genero": "Fantas\u00eda",
+            "valoracion": 4.0
         },
         "3": {
             "id": "3",
@@ -25,8 +25,8 @@
             "id": "4",
             "titulo": "Fahrenheit 451",
             "autor": "Ray Bradbury",
-            "genero": "Ciencia ficci\u00f3n",
-            "valoracion": 4.5
+            "genero": "Novela hist\u00f3rica",
+            "valoracion": 6.0
         },
         "5": {
             "id": "5",
@@ -46,7 +46,7 @@
             "id": "7",
             "titulo": "Harry Potter",
             "autor": "J.K. Rowling",
-            "genero": "Fantas\u00eda",
+            "genero": "Ciencia ficci\u00f3n",
             "valoracion": 4.7
         },
         "8": {
@@ -69,6 +69,13 @@
             "autor": "Suzanne Collins",
             "genero": "Distop\u00eda",
             "valoracion": 4.6
+        },
+        "11": {
+            "id": "11",
+            "titulo": "B",
+            "autor": "b",
+            "genero": "Ficci\u00f3n",
+            "valoracion": 5.0
         }
     }
 }

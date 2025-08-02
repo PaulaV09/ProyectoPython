@@ -55,3 +55,16 @@ def validateBoolean(msg: str) -> bool:
         else:
             print("ERROR: Debe ingresar 'S' o 'N'.")
             os.system("pause")
+
+def validateValoracion(msg: str) -> float:
+    while True:
+        try:
+            valoracion = float(input(msg))
+            if 1 <= valoracion <= 5:
+                return valoracion
+            else:
+                print("ERROR: La valoración debe estar entre 1 y 5.")
+                os.system("pause")
+        except ValueError:
+            print("ERROR: Ingrese un valor numérico válido.")
+            os.system("pause")
